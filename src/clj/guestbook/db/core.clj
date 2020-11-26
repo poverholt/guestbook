@@ -2,6 +2,7 @@
   (:require
     [clojure.java.jdbc :as jdbc]
     [conman.core :as conman]
+    [java-time :refer [java-date]]
     [java-time.pre-java8 :as jt]
     [mount.core :refer [defstate]]
     [guestbook.config :refer [env]]))
@@ -15,14 +16,11 @@
 
 (extend-protocol jdbc/IResultSetReadColumn
   java.sql.Timestamp
-  (result-set-read-column [v _2 _3]
-    (.toLocalDateTime v))
+  (result-set-read-column [v _2 _3] (java-date (.atZone (.toLocalDateTime v) (java.time.ZoneId/systemDefault))))
   java.sql.Date
-  (result-set-read-column [v _2 _3]
-    (.toLocalDate v))
+  (result-set-read-column [v _2 _3] (.toLocalDate v))
   java.sql.Time
-  (result-set-read-column [v _2 _3]
-    (.toLocalTime v)))
+  (result-set-read-column [v _2 _3] (.toLocalTime v)))
 
 (extend-protocol jdbc/ISQLValue
   java.util.Date
