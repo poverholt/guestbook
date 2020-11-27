@@ -30,6 +30,7 @@
                  [org.webjars.npm/material-icons "0.3.1"]
                  [org.webjars/webjars-locator "0.38"]
                  [reagent "1.0.0-alpha2"]
+                 [re-frame "1.1.2"]
                  [ring-webjars "0.2.0"]
                  [ring/ring-core "1.8.0"]
                  [ring/ring-defaults "0.3.2"]
