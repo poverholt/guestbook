@@ -10,6 +10,7 @@ test-config.edn
 /.lein-*
 profiles.clj
 /.env
+/.shadow-cljs
 .nrepl-port
 
 /node_modules
