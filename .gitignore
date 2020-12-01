@@ -16,6 +16,13 @@ profiles.clj
 /node_modules
 /log
 
+guestbook_dev\.db
+guestbook_test\.db
+guestbook_dev.db.mv.db
+guestbook_dev.db.trace.db
+guestbook_test.db.mv.db
+guestbook_test.db.trace.db
+
 *~
 *#
 .#*
