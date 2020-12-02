@@ -10,7 +10,7 @@
   (layout/render request "about.html"))
 
 (defn home-routes []
-  [""{:middleware [middleware/wrap-csrf middleware/wrap-formats]}
+  ["" {:middleware [middleware/wrap-csrf middleware/wrap-formats]}
    ["/" {:get home-page}]
    ["/about" {:get about-page}]])
 

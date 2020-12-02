@@ -8,7 +8,7 @@
 
 (rf/reg-event-fx
  :app/initialize
- (fn [__]
+ (fn [_ _]
    {:db {:messages/loading? true}}))
 
 (rf/reg-sub
@@ -123,6 +123,6 @@
   (get-messages)
   (mount-components))
 
-(dom/render
- [home]
- (.getElementById js/document "content"))
+;;(dom/render
+;; [home]
+;; (.getElementById js/document "content"))
