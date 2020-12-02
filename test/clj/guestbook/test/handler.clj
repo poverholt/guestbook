@@ -22,8 +22,12 @@
     (let [response ((app) (request :get "/"))]
       (is (= 200 (:status response)))))
 
+  (testing "about"
+    (let [response ((app) (request :get "/about"))]
+      (is (= 200 (:status response)))))
+
   (testing "get messages"
-    (let [response ((app) (request :get "/messages"))]
+    (let [response ((app) (request :get "/api/messages"))]
       (is (= 200 (:status response)))))
 
   (testing "not-found route"

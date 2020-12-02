@@ -11,22 +11,18 @@
  (fn [__]
    {:db {:messages/loading? true}}))
 
-(rf/reg-event-db
- :messages/set
- (fn [db [_ messages]]
-   (-> db
-       (assoc :messages/loading? false
-              :messages/list messages))))
-
-(rf/reg-event-db
- :messages/add
- (fn [db [_ message]]
-   (update db :messages/list conj message)))
-
 (rf/reg-sub
  :messages/loading?
  (fn [db _]
    (:messages/loading? db)))
+
+(rf/reg-event-db
+ :messages/set
+ [rf/debug]
+ (fn [db [_ messages]]
+   (-> db
+       (assoc :messages/loading? false
+              :messages/list messages))))
 
 (rf/reg-sub
  :messages/list
@@ -47,16 +43,21 @@
                         [:p message]
                         [:p " - " name]])])
 
+(rf/reg-event-db
+ :message/add
+ (fn [db [_ message]]
+   (update db :messages/list conj message)))
+
 (defn send-message! [fields errors]
   (if-let [validation-errors (validate-message @fields)]
     (reset! errors validation-errors)
     (POST "/api/message"
           {:format :json
-           :headers {"accept" "application/transit+json"
+           :headers {"Accept" "application/transit+json"
                      "x-csrf-token" (.-value (.getElementById js/document "token"))}
            :params @fields
            :handler #(do
-                       (rf/dispatch [:messages/add (assoc @fields :timestamp (js/Date.))])
+                       (rf/dispatch [:message/add (assoc @fields :timestamp (js/Date.))])
                        (reset! fields nil)
                        (reset! errors nil))
            :error-handler #(do
