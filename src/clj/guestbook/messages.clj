@@ -3,7 +3,14 @@
             [guestbook.validation :refer [validate-message]]))
 
 (defn message-list []
-  {:messages (vec (db/get-messages))})
+  (do
+    (println "In message-list")
+    (try
+      (let [m (db/get-messages)]
+        (println m)
+        {:messages (vec m)})
+      (catch Exception e (str "caught exception: " (.getMessage e)))
+      (finally (prn "final exception.")))))
 
 (defn save-message! [message]
   (if-let [errors (validate-message message)]

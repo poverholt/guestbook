@@ -37,7 +37,11 @@
                                   :name string?
                                   :messages string?
                                   :timestamp inst?}]}}}
-                  :handler (fn [_] (response/ok (msg/message-list)))}}]
+                  :handler (fn [_] (do
+                                     (println "HANDLER for /messages!!!")
+                                     (let [m (msg/message-list)]
+                                       (println "MESSAGE-list: " m)
+                                       (response/ok m))))}}]
    ["/message" {:post {:parameters {:body ; Data Spec for Request body parameters
                                     {:name string?
                                      :message string?}}
