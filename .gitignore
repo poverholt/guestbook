@@ -12,6 +12,8 @@ profiles.clj
 /.env
 /.shadow-cljs
 .nrepl-port
+\.rebel_readline_history
+.repl-history
 
 /node_modules
 /log
