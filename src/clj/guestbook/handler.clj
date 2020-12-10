@@ -5,6 +5,7 @@
    [guestbook.middleware :as middleware]
    [guestbook.routes.home :refer [home-routes]]
    [guestbook.routes.services :refer [service-routes]]
+   [guestbook.routes.websockets :refer [websocket-routes]]
    [mount.core :as mount]
    [reitit.ring :as ring]
    [ring.middleware.content-type :refer [wrap-content-type]]
@@ -19,7 +20,8 @@
   (ring/ring-handler
     (ring/router
      [(home-routes)
-      (service-routes)])
+      (service-routes)
+      (websocket-routes)])
     (ring/routes
      (ring/create-resource-handler
       {:path "/"})
