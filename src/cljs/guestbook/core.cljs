@@ -57,7 +57,8 @@
                      "x-csrf-token" (.-value (.getElementById js/document "token"))}
            :params @fields
            :handler #(do
-                       (rf/dispatch [:message/add (assoc @fields :timestamp (js/Date.))])
+                       (rf/dispatch [:message/add (-> @fields
+                                                      (assoc :timestamp (js/Date.)))])
                        (reset! fields nil)
                        (reset! errors nil))
            :error-handler #(do
@@ -122,6 +123,8 @@
   (rf/dispatch [:app/initialize])
   (get-messages)
   (mount-components))
+
+(.log js/console "guestbook.core evaluated!")
 
 ;;(dom/render
 ;; [home]

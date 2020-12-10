@@ -27,6 +27,7 @@
                  [org.clojure/clojurescript "1.10.520" :scope "provided"]
                  [reagent "0.10.0"]
                  [re-frame "1.0.0"] ;add re-frame
+                 [day8.re-frame/re-frame-10x "0.7.0"]
                  ;;
                  [com.google.javascript/closure-compiler-unshaded "v20190618" :scope "provided"]
                  [org.clojure/google-closure-library "0.0-20190213-2033d5d9" :scope "provided"]
@@ -58,6 +59,7 @@
              :aot :all
              :uberjar-name "guestbook.jar"
              :source-paths ["env/prod/clj" "env/prod/cljc" "env/prod/cljs"]
+             :prep-tasks ["compile" ["run" "-m" "shadow.cljs.devtools.cli" "release" "app"]]
              :resource-paths ["env/prod/resources"]}
 
    :dev           [:project/dev :profiles/dev]
