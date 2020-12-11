@@ -3,6 +3,7 @@
             [clojure.string :as string]
             [guestbook.validation :refer [validate-message]]
             [guestbook.websockets :as ws]
+            [mount.core :as mount]
             [reagent.core :as r]
             [reagent.dom :as dom]
             [re-frame.core :as rf]))
@@ -56,7 +57,14 @@
 (rf/reg-event-fx
  :message/send!
  (fn [{:keys [db]} [_ fields]]
-   (ws/send-message! fields)
+   (ws/send!
+    [:message/create! fields]
+    10000
+    (fn [{:keys [success errors] :as response}]
+      (.log js/console "Called Back: " (pr-str response))
+      (if success
+        (rf/dispatch [:form/clear-fields])
+        (rf/dispatch [:form/set-server-errors errors]))))
    {:db (dissoc db :form/server-errors)}))
 
 (defn errors-component [id]
@@ -183,9 +191,8 @@
 
 (defn init! []
   (.log js/console "Initializing App...")
+  (mount/start)
   (rf/dispatch [:app/initialize])
-  (ws/connect! (str "ws://" (.-host js/location) "/ws")
-               handle-response!)
   (mount-components))
 
 (.log js/console "guestbook.core evaluated!")
